@@ -27,8 +27,8 @@ export class ExpenseService {
     return data;
   }
 
-  async create(expenseDto: ExpenseDto): Promise<ExpenseEntity> {
-    const expense = this.expensesRepository.create(expenseDto);
+  async create(body: ExpenseDto): Promise<ExpenseEntity> {
+    const expense = this.expensesRepository.create(body);
 
     return await this.expensesRepository.save(expense);
   }

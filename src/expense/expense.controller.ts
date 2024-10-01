@@ -13,7 +13,7 @@ export class ExpenseController {
     return this.expensesService.get();
   }
 
-  @Get(':idid')
+  @Get(':id')
   async getById(@Param('id') id: string): Promise<ExpenseEntity> {
     return this.expensesService.getById(id);
   }
