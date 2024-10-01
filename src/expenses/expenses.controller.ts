@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ExpensesService } from './expenses.service';
 import { ExpensesDto } from './expenses.dto';
 import { ExpensesEntity } from './expenses.entity';
@@ -11,6 +11,11 @@ export class ExpensesController {
   @Get()
   async getAll(): Promise<ApiResponse<ExpensesEntity>> {
     return this.expensesService.get();
+  }
+
+  @Get(':idid')
+  async getById(@Param('id') id: string): Promise<ExpensesEntity> {
+    return this.expensesService.getById(id);
   }
 
   @Post()

@@ -21,9 +21,15 @@ export class ExpensesService {
     };
   }
 
+  async getById(id: string): Promise<ExpensesEntity> {
+    const data = await this.expensesRepository.findOneBy({ id });
+
+    return data;
+  }
+
   async create(expensesDto: ExpensesDto): Promise<ExpensesEntity> {
     const expense = this.expensesRepository.create(expensesDto);
 
-    return this.expensesRepository.save(expense);
+    return await this.expensesRepository.save(expense);
   }
 }

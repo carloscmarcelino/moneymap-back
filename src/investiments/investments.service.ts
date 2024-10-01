@@ -21,11 +21,15 @@ export class InvestmentsService {
     };
   }
 
+  async getById(id: string): Promise<InvestmentsEntity> {
+    return await this.investmentsRepository.findOneBy({ id });
+  }
+
   async create(
     createInvestmentsDto: CreateInvestmentsDto,
   ): Promise<InvestmentsEntity> {
     const investment = this.investmentsRepository.create(createInvestmentsDto);
 
-    return this.investmentsRepository.save(investment);
+    return await this.investmentsRepository.save(investment);
   }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateInvestmentsDto } from './dto/investments.dto';
 import { InvestmentsService } from './investments.service';
 import { InvestmentsEntity } from './investments.entity';
@@ -11,6 +11,11 @@ export class InvestmentsController {
   @Get()
   async get(): Promise<ApiResponse<InvestmentsEntity>> {
     return this.investimentsService.get();
+  }
+
+  @Get(':id')
+  async getById(@Param('id') id: string): Promise<InvestmentsEntity> {
+    return this.investimentsService.getById(id);
   }
 
   @Post()
