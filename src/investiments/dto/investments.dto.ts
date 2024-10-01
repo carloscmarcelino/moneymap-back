@@ -1,3 +1,3 @@
 export class CreateInvestmentsDto {
-  value: string;
+  value: number;
 }
