@@ -32,4 +32,13 @@ export class ExpensesService {
 
     return await this.expensesRepository.save(expense);
   }
+
+  async update(body: ExpensesDto, id: string): Promise<ExpensesEntity> {
+    const expense = await this.expensesRepository.preload({
+      id,
+      ...body,
+    });
+
+    return expense;
+  }
 }

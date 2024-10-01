@@ -32,4 +32,16 @@ export class InvestmentsService {
 
     return await this.investmentsRepository.save(investment);
   }
+
+  async update(
+    body: CreateInvestmentsDto,
+    id: string,
+  ): Promise<InvestmentsEntity> {
+    const investment = await this.investmentsRepository.preload({
+      id,
+      ...body,
+    });
+
+    return investment;
+  }
 }

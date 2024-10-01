@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { ExpensesService } from './expenses.service';
 import { ExpensesDto } from './expenses.dto';
 import { ExpensesEntity } from './expenses.entity';
@@ -19,7 +19,12 @@ export class ExpensesController {
   }
 
   @Post()
-  async create(@Body() expensesDto: ExpensesDto): Promise<ExpensesEntity> {
-    return this.expensesService.create(expensesDto);
+  async create(@Body() expenseDto: ExpensesDto): Promise<ExpensesEntity> {
+    return this.expensesService.create(expenseDto);
+  }
+
+  @Patch(':id')
+  async update(@Body() body: ExpensesDto, @Param('id') id: string) {
+    return this.expensesService.update(body, id);
   }
 }

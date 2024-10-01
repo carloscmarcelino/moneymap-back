@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { CreateInvestmentsDto } from './dto/investments.dto';
 import { InvestmentsService } from './investments.service';
 import { InvestmentsEntity } from './investments.entity';
@@ -23,5 +23,13 @@ export class InvestmentsController {
     @Body() createInvestimentsDto: CreateInvestmentsDto,
   ): Promise<InvestmentsEntity> {
     return this.investimentsService.create(createInvestimentsDto);
+  }
+
+  @Patch(':id')
+  update(
+    @Body() body: CreateInvestmentsDto,
+    @Param('id') id: string,
+  ): Promise<InvestmentsEntity> {
+    return this.investimentsService.update(body, id);
   }
 }
