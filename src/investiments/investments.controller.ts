@@ -3,7 +3,7 @@ import { CreateInvestmentsDto } from './dto/investments.dto';
 import { InvestmentsService } from './investments.service';
 import { InvestmentsEntity } from './investments.entity';
 
-@Controller('investiments')
+@Controller('investments')
 export class InvestmentsController {
   constructor(private readonly investimentsService: InvestmentsService) {}
 
