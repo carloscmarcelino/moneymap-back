@@ -3,7 +3,7 @@ import { Broker } from './types';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class BrokersService {
+export class BrokerService {
   async get(): Promise<Broker[]> {
     const { data } = await axios.get<Broker[]>(
       'https://brasilapi.com.br/api/cvm/corretoras/v1',
