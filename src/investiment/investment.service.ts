@@ -42,4 +42,12 @@ export class InvestmentsService {
 
     return investment;
   }
+
+  async delete(id: string) {
+    const expense = await this.investmentsRepository.findOneBy({ id });
+
+    await this.investmentsRepository.remove(expense);
+
+    return expense;
+  }
 }

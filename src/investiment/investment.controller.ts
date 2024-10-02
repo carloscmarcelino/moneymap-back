@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { CreateInvestmentsDto } from './dto/investments.dto';
 import { ApiResponse } from 'src/types';
 import { InvestmentEntity } from './investment.entity';
@@ -9,17 +17,17 @@ export class InvestmentsController {
   constructor(private readonly investimentsService: InvestmentsService) {}
 
   @Get()
-  async get(): Promise<ApiResponse<InvestmentEntity>> {
+  get(): Promise<ApiResponse<InvestmentEntity>> {
     return this.investimentsService.get();
   }
 
   @Get(':id')
-  async getById(@Param('id') id: string): Promise<InvestmentEntity> {
+  getById(@Param('id') id: string): Promise<InvestmentEntity> {
     return this.investimentsService.getById(id);
   }
 
   @Post()
-  async create(@Body() body: CreateInvestmentsDto): Promise<InvestmentEntity> {
+  create(@Body() body: CreateInvestmentsDto): Promise<InvestmentEntity> {
     return this.investimentsService.create(body);
   }
 
@@ -29,5 +37,10 @@ export class InvestmentsController {
     @Param('id') id: string,
   ): Promise<InvestmentEntity> {
     return this.investimentsService.update(body, id);
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string) {
+    return this.investimentsService.delete(id);
   }
 }
