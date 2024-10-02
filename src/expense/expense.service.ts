@@ -39,6 +39,8 @@ export class ExpenseService {
       ...body,
     });
 
+    this.expensesRepository.save(expense);
+
     return expense;
   }
 
