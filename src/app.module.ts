@@ -6,14 +6,22 @@ import { BankModule } from './bank/bank.module';
 import { BrokerModule } from './broker/broker.module';
 import { ExpenseModule } from './expense/expense.module';
 import { InvestmentModule } from './investiment/investiment.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    AuthModule,
     DatabaseModule,
     InvestmentModule,
     BankModule,
     BrokerModule,
     ExpenseModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
