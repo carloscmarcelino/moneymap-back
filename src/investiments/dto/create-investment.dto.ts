@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
-export class CreateInvestmentsDto {
+export class CreateInvestmentDto {
   @IsString()
   @IsNotEmpty()
   type: string;

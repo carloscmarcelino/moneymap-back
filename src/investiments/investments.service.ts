@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { CreateInvestmentsDto } from './dto/investments.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ApiResponse } from 'src/types';
-import { InvestmentEntity } from './investment.entity';
+import { CreateInvestmentDto } from './dto/create-investment.dto';
+import { InvestmentsEntity } from './investments.entity';
 
 @Injectable()
 export class InvestmentsService {
   constructor(
-    @InjectRepository(InvestmentEntity)
-    private investmentsRepository: Repository<InvestmentEntity>,
+    @InjectRepository(InvestmentsEntity)
+    private investmentsRepository: Repository<InvestmentsEntity>,
   ) {}
 
-  async get(): Promise<ApiResponse<InvestmentEntity>> {
+  async get(): Promise<ApiResponse<InvestmentsEntity>> {
     const [data, totalItems] = await this.investmentsRepository.findAndCount();
 
     return {
@@ -21,20 +21,20 @@ export class InvestmentsService {
     };
   }
 
-  async getById(id: string): Promise<InvestmentEntity> {
+  async getById(id: string): Promise<InvestmentsEntity> {
     return await this.investmentsRepository.findOneBy({ id });
   }
 
-  async create(body: CreateInvestmentsDto): Promise<InvestmentEntity> {
+  async create(body: CreateInvestmentDto): Promise<InvestmentsEntity> {
     const investment = this.investmentsRepository.create(body);
 
     return await this.investmentsRepository.save(investment);
   }
 
   async update(
-    body: CreateInvestmentsDto,
+    body: CreateInvestmentDto,
     id: string,
-  ): Promise<InvestmentEntity> {
+  ): Promise<InvestmentsEntity> {
     const investment = await this.investmentsRepository.preload({
       id,
       ...body,

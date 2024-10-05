@@ -1,10 +1,10 @@
 import { Controller, Get } from '@nestjs/common';
 import { Broker } from './types';
-import { BrokerService } from './broker.service';
+import { BrokersService } from './brokers.service';
 
 @Controller('broker')
-export class BrokerController {
-  constructor(private readonly brokersService: BrokerService) {}
+export class BrokersController {
+  constructor(private readonly brokersService: BrokersService) {}
 
   @Get()
   async get(): Promise<Broker[]> {
