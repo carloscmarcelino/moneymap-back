@@ -2,17 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ApiResponse } from 'src/types';
-import { ExpenseEntity } from './expense.entity';
-import { ExpenseDto } from './expense.dto';
+import { ExitsEntity } from './exits.entity';
+import { CreateExitsDto } from './dto/create-exits.dto';
 
 @Injectable()
-export class ExpenseService {
+export class ExitsService {
   constructor(
-    @InjectRepository(ExpenseEntity)
-    private expensesRepository: Repository<ExpenseEntity>,
+    @InjectRepository(ExitsEntity)
+    private expensesRepository: Repository<ExitsEntity>,
   ) {}
 
-  async get(): Promise<ApiResponse<ExpenseEntity>> {
+  async get(): Promise<ApiResponse<ExitsEntity>> {
     const [data, totalItems] = await this.expensesRepository.findAndCount();
 
     return {
@@ -21,19 +21,19 @@ export class ExpenseService {
     };
   }
 
-  async getById(id: string): Promise<ExpenseEntity> {
+  async getById(id: string): Promise<ExitsEntity> {
     const data = await this.expensesRepository.findOneBy({ id });
 
     return data;
   }
 
-  async create(body: ExpenseDto): Promise<ExpenseEntity> {
+  async create(body: CreateExitsDto): Promise<ExitsEntity> {
     const expense = this.expensesRepository.create(body);
 
     return await this.expensesRepository.save(expense);
   }
 
-  async update(body: ExpenseDto, id: string): Promise<ExpenseEntity> {
+  async update(body: CreateExitsDto, id: string): Promise<ExitsEntity> {
     const expense = await this.expensesRepository.preload({
       id,
       ...body,
