@@ -13,6 +13,9 @@ export class EntriesEntity {
   @Column('decimal')
   value: number;
 
+  @Column({ type: 'varchar', length: 100 })
+  description: string;
+
   @CreateDateColumn()
   date: Date;
 }
