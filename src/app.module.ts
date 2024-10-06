@@ -9,6 +9,7 @@ import { EntriesModule } from './entries/entries.module';
 import { BrokersModule } from './brokers/brokers.module';
 import { BankSModule } from './banks/banks.module';
 import { InvestmentsModule } from './investiments/investiments.module';
+import { ExitsModule } from './exits/exits.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { InvestmentsModule } from './investiments/investiments.module';
     BrokersModule,
     UsersModule,
     EntriesModule,
+    ExitsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
