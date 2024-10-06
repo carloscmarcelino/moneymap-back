@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { EntriesService } from './entries.service';
 import { CreateEntriesDto } from './dto/CreateEntriesDto';
 import { EntriesEntity } from './entries.entity';
@@ -14,7 +14,12 @@ export class EntriesController {
   }
 
   @Get()
-  getEntires(): Promise<ApiResponse<EntriesEntity>> {
+  getEntrie(): Promise<ApiResponse<EntriesEntity>> {
     return this.entriesService.get();
+  }
+
+  @Delete(':id')
+  deleteEntrie(@Param('id') id: string) {
+    return this.entriesService.delete(id);
   }
 }

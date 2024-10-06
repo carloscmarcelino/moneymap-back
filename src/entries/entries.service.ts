@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { EntriesEntity } from './entries.entity';
 import { CreateEntriesDto } from './dto/CreateEntriesDto';
 import { ApiResponse } from 'src/types';
@@ -25,5 +25,9 @@ export class EntriesService {
       data,
       totalItems,
     };
+  }
+
+  async delete(id: string): Promise<DeleteResult> {
+    return await this.entriesService.delete(id);
   }
 }
