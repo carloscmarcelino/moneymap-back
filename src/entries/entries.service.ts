@@ -30,4 +30,13 @@ export class EntriesService {
   async delete(id: string): Promise<DeleteResult> {
     return await this.entriesService.delete(id);
   }
+
+  async update(body: CreateEntriesDto, id: string): Promise<EntriesEntity> {
+    const entrie = await this.entriesService.preload({
+      id: id,
+      ...body,
+    });
+
+    return await this.entriesService.save(entrie);
+  }
 }

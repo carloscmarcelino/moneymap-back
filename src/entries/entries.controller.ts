@@ -1,8 +1,17 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { EntriesService } from './entries.service';
 import { CreateEntriesDto } from './dto/CreateEntriesDto';
 import { EntriesEntity } from './entries.entity';
 import { ApiResponse } from 'src/types';
+import { DeleteResult } from 'typeorm';
 
 @Controller('entries')
 export class EntriesController {
@@ -19,7 +28,15 @@ export class EntriesController {
   }
 
   @Delete(':id')
-  deleteEntrie(@Param('id') id: string) {
+  deleteEntrie(@Param('id') id: string): Promise<DeleteResult> {
     return this.entriesService.delete(id);
+  }
+
+  @Patch(':id')
+  update(
+    @Body() body: CreateEntriesDto,
+    @Param('id') id: string,
+  ): Promise<EntriesEntity> {
+    return this.entriesService.update(body, id);
   }
 }
