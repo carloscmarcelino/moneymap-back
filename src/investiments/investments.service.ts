@@ -40,7 +40,7 @@ export class InvestmentsService {
       ...body,
     });
 
-    return investment;
+    return this.investmentsRepository.save(investment);
   }
 
   async delete(id: string) {
