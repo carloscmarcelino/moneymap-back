@@ -6,29 +6,40 @@ import {
   Param,
   Patch,
   Post,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
 import { EntriesService } from './entries.service';
 import { CreateEntriesDto } from './dto/CreateEntriesDto';
 import { EntriesEntity } from './entries.entity';
-import { ApiResponse } from 'src/types';
+import { ApiResponse, AuthenticatedRequest } from 'src/types';
 import { DeleteResult } from 'typeorm';
+import { JwtAuthGuard } from 'src/auth/jwt-auth-guard';
 
 @Controller('entries')
+@UseGuards(JwtAuthGuard)
 export class EntriesController {
   constructor(private readonly entriesService: EntriesService) {}
 
   @Post()
-  createEntries(@Body() body: CreateEntriesDto): Promise<EntriesEntity> {
-    return this.entriesService.create(body);
+  create(
+    @Body() body: CreateEntriesDto,
+    @Req() req: AuthenticatedRequest,
+  ): Promise<EntriesEntity> {
+    const userId = req.user.id;
+
+    return this.entriesService.create(body, userId);
   }
 
   @Get()
-  getEntrie(): Promise<ApiResponse<EntriesEntity>> {
-    return this.entriesService.get();
+  get(@Req() req: AuthenticatedRequest): Promise<ApiResponse<EntriesEntity>> {
+    const userId = req.user.id;
+
+    return this.entriesService.get(userId);
   }
 
   @Delete(':id')
-  deleteEntrie(@Param('id') id: string): Promise<DeleteResult> {
+  delete(@Param('id') id: string): Promise<DeleteResult> {
     return this.entriesService.delete(id);
   }
 

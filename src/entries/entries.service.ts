@@ -12,14 +12,16 @@ export class EntriesService {
     private entriesService: Repository<EntriesEntity>,
   ) {}
 
-  async create(body: CreateEntriesDto): Promise<EntriesEntity> {
-    const entrie = this.entriesService.create(body);
+  async create(body: CreateEntriesDto, userId: string): Promise<EntriesEntity> {
+    const entrie = this.entriesService.create({ ...body, userId });
 
     return await this.entriesService.save(entrie);
   }
 
-  async get(): Promise<ApiResponse<EntriesEntity>> {
-    const [data, totalItems] = await this.entriesService.findAndCount();
+  async get(userId: string): Promise<ApiResponse<EntriesEntity>> {
+    const [data, totalItems] = await this.entriesService.findAndCount({
+      where: { userId },
+    });
 
     return {
       data,

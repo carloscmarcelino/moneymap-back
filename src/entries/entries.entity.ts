@@ -10,6 +10,9 @@ export class EntriesEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column('uuid')
+  userId: string;
+
   @Column('decimal')
   value: number;
 

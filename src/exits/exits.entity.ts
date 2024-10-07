@@ -10,6 +10,9 @@ export class ExitsEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column('uuid')
+  userId: string;
+
   @CreateDateColumn()
   date: Date;
 

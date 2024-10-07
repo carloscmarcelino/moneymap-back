@@ -12,8 +12,10 @@ export class ExitsService {
     private expensesRepository: Repository<ExitsEntity>,
   ) {}
 
-  async get(): Promise<ApiResponse<ExitsEntity>> {
-    const [data, totalItems] = await this.expensesRepository.findAndCount();
+  async get(userId: string): Promise<ApiResponse<ExitsEntity>> {
+    const [data, totalItems] = await this.expensesRepository.findAndCount({
+      where: { userId },
+    });
 
     return {
       data,
@@ -27,8 +29,8 @@ export class ExitsService {
     return data;
   }
 
-  async create(body: CreateExitsDto): Promise<ExitsEntity> {
-    const expense = this.expensesRepository.create(body);
+  async create(body: CreateExitsDto, userId: string): Promise<ExitsEntity> {
+    const expense = this.expensesRepository.create({ ...body, userId });
 
     return await this.expensesRepository.save(expense);
   }
