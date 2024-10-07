@@ -6,19 +6,27 @@ import {
   Param,
   Patch,
   Post,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiResponse } from 'src/types';
+import { ApiResponse, AuthenticatedRequest } from 'src/types';
 import { InvestmentsService } from './investments.service';
 import { InvestmentsEntity } from './investments.entity';
 import { CreateInvestmentDto } from './dto/create-investment.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth-guard';
 
 @Controller('investments')
+@UseGuards(JwtAuthGuard)
 export class InvestmentsController {
   constructor(private readonly investimentsService: InvestmentsService) {}
 
   @Get()
-  get(): Promise<ApiResponse<InvestmentsEntity>> {
-    return this.investimentsService.get();
+  get(
+    @Req() req: AuthenticatedRequest,
+  ): Promise<ApiResponse<InvestmentsEntity>> {
+    const userId = req.user.id;
+
+    return this.investimentsService.get(userId);
   }
 
   @Get(':id')
@@ -27,8 +35,13 @@ export class InvestmentsController {
   }
 
   @Post()
-  create(@Body() body: CreateInvestmentDto): Promise<InvestmentsEntity> {
-    return this.investimentsService.create(body);
+  create(
+    @Body() body: CreateInvestmentDto,
+    @Req() req: AuthenticatedRequest,
+  ): Promise<InvestmentsEntity> {
+    const userId = req.user.id;
+
+    return this.investimentsService.create(body, userId);
   }
 
   @Patch(':id')

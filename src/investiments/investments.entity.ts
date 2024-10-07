@@ -10,6 +10,9 @@ export class InvestmentsEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column({ type: 'uuid' })
+  userId: string;
+
   @CreateDateColumn()
   date: Date;
 

@@ -12,8 +12,10 @@ export class InvestmentsService {
     private investmentsRepository: Repository<InvestmentsEntity>,
   ) {}
 
-  async get(): Promise<ApiResponse<InvestmentsEntity>> {
-    const [data, totalItems] = await this.investmentsRepository.findAndCount();
+  async get(userId: string): Promise<ApiResponse<InvestmentsEntity>> {
+    const [data, totalItems] = await this.investmentsRepository.findAndCount({
+      where: { userId },
+    });
 
     return {
       data,
@@ -25,8 +27,11 @@ export class InvestmentsService {
     return await this.investmentsRepository.findOneBy({ id });
   }
 
-  async create(body: CreateInvestmentDto): Promise<InvestmentsEntity> {
-    const investment = this.investmentsRepository.create(body);
+  async create(
+    body: CreateInvestmentDto,
+    userId: string,
+  ): Promise<InvestmentsEntity> {
+    const investment = this.investmentsRepository.create({ ...body, userId });
 
     return await this.investmentsRepository.save(investment);
   }
