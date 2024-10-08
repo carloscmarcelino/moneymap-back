@@ -2,8 +2,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { InvestmentTypesEntity } from './types.entity';
 
 @Entity()
 export class InvestmentsEntity {
@@ -16,8 +18,8 @@ export class InvestmentsEntity {
   @CreateDateColumn()
   date: Date;
 
-  @Column({ type: 'varchar', length: 50 })
-  type: string;
+  @ManyToOne(() => InvestmentTypesEntity)
+  type: InvestmentTypesEntity;
 
   @Column('decimal')
   value: number;

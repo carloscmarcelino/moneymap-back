@@ -19,6 +19,7 @@ export class InvestmentsService {
   async get(userId: string): Promise<ApiResponse<InvestmentsEntity>> {
     const [data, totalItems] = await this.investmentsRepository.findAndCount({
       where: { userId },
+      relations: ['type'],
     });
 
     return {
@@ -73,7 +74,10 @@ export class InvestmentsService {
     body: CreateInvestmentDto,
     userId: string,
   ): Promise<InvestmentsEntity> {
-    const investment = this.investmentsRepository.create({ ...body, userId });
+    const investment = this.investmentsRepository.create({
+      ...body,
+      userId,
+    });
 
     return await this.investmentsRepository.save(investment);
   }
@@ -85,6 +89,10 @@ export class InvestmentsService {
     const investment = await this.investmentsRepository.preload({
       id,
       ...body,
+      type: {
+        id: body.type.id,
+        name: body.type.name,
+      },
     });
 
     return this.investmentsRepository.save(investment);

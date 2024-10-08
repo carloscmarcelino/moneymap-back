@@ -1,9 +1,17 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+import { InvestmentTypeDto } from './type.dto';
+import { Type } from 'class-transformer';
 
 export class CreateInvestmentDto {
-  @IsString()
+  @ValidateNested()
+  @Type(() => InvestmentTypeDto)
   @IsNotEmpty()
-  type: string;
+  type: InvestmentTypeDto;
 
   @IsNumber()
   @IsNotEmpty()
