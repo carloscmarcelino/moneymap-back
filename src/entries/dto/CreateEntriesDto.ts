@@ -1,4 +1,4 @@
-import { IsDate, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class CreateEntriesDto {
   @IsNumber()
@@ -7,7 +7,7 @@ export class CreateEntriesDto {
   @IsString()
   description: string;
 
-  @IsDate()
+  @IsString()
   @IsOptional()
-  date: Date;
+  date: string;
 }
