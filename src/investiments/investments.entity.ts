@@ -26,5 +26,5 @@ export class InvestmentsEntity {
   yield: number;
 
   @Column({ type: 'varchar', length: 100 })
-  bank: string;
+  broker: string;
 }

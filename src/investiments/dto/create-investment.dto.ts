@@ -15,5 +15,5 @@ export class CreateInvestmentDto {
 
   @IsString()
   @IsNotEmpty()
-  bank: string;
+  broker: string;
 }
