@@ -1,6 +1,7 @@
 import {
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   ValidateNested,
 } from 'class-validator';
@@ -24,4 +25,8 @@ export class CreateInvestmentDto {
   @IsString()
   @IsNotEmpty()
   broker: string;
+
+  @IsString()
+  @IsOptional()
+  date: string;
 }
