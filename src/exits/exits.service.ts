@@ -4,18 +4,25 @@ import { Repository } from 'typeorm';
 import { ApiResponse } from 'src/types';
 import { ExitsEntity } from './exits.entity';
 import { CreateExitsDto } from './dto/create-exits.dto';
+import { PaymentMethodsEntity } from 'src/payment-methods/payment-methods.entity';
 
 @Injectable()
 export class ExitsService {
   constructor(
     @InjectRepository(ExitsEntity)
     private expensesRepository: Repository<ExitsEntity>,
+
+    @InjectRepository(PaymentMethodsEntity)
+    private paymentMethodsRepository: Repository<PaymentMethodsEntity>,
   ) {}
 
   async get(userId: string): Promise<ApiResponse<ExitsEntity>> {
     const [data, totalItems] = await this.expensesRepository.findAndCount({
       where: { userId },
+      relations: ['paymentMethod'],
     });
+
+    console.log('get exits', data);
 
     return {
       data,
@@ -30,7 +37,15 @@ export class ExitsService {
   }
 
   async create(body: CreateExitsDto, userId: string): Promise<ExitsEntity> {
-    const expense = this.expensesRepository.create({ ...body, userId });
+    const paymentMethod = await this.paymentMethodsRepository.findOne({
+      where: { id: body.paymentMethodId },
+    });
+
+    const expense = this.expensesRepository.create({
+      ...body,
+      userId,
+      paymentMethod,
+    });
 
     return await this.expensesRepository.save(expense);
   }
@@ -41,7 +56,7 @@ export class ExitsService {
       ...body,
     });
 
-    this.expensesRepository.save(expense);
+    await this.expensesRepository.save(expense);
 
     return expense;
   }

@@ -10,6 +10,7 @@ import { BrokersModule } from './brokers/brokers.module';
 import { BankSModule } from './banks/banks.module';
 import { InvestmentsModule } from './investiments/investiments.module';
 import { ExitsModule } from './exits/exits.module';
+import { PaymentMethodsModule } from './payment-methods/payment-methods.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { ExitsModule } from './exits/exits.module';
     UsersModule,
     EntriesModule,
     ExitsModule,
+    PaymentMethodsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

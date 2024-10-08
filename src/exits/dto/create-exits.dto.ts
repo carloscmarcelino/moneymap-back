@@ -11,5 +11,5 @@ export class CreateExitsDto {
 
   @IsString()
   @IsNotEmpty()
-  paymentMethod: string;
+  paymentMethodId: string;
 }

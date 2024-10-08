@@ -1,7 +1,9 @@
+import { PaymentMethodsEntity } from 'src/payment-methods/payment-methods.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -22,6 +24,6 @@ export class ExitsEntity {
   @Column('decimal')
   amount: number;
 
-  @Column({ type: 'varchar', length: 50 })
-  paymentMethod: string;
+  @ManyToOne(() => PaymentMethodsEntity, (paymentMethod) => paymentMethod.id)
+  paymentMethod: PaymentMethodsEntity;
 }

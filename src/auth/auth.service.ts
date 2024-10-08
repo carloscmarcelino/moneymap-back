@@ -14,8 +14,6 @@ export class AuthService {
     const user = await this.userService.findOneBy(username);
 
     if (user && (await bcrypt.compare(pass, user.password))) {
-      console.log('validate', user);
-
       return {
         id: user.id,
         username: user.username,
@@ -26,8 +24,6 @@ export class AuthService {
   }
 
   async login(user: { id: string; username: string }) {
-    console.log('login', user);
-
     return {
       access_token: this.jwtService.sign({ ...user, userId: user.id }),
       username: user.username,
