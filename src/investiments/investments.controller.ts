@@ -30,6 +30,13 @@ export class InvestmentsController {
     return this.investimentsService.get(userId);
   }
 
+  @Get('total')
+  getTotal(@Req() req: AuthenticatedRequest) {
+    const userId = req.user.id;
+
+    return this.investimentsService.getTotal(userId);
+  }
+
   @Get('types')
   getTypes(): Promise<ApiResponse<InvestmentTypesEntity>> {
     return this.investimentsService.getTypes();

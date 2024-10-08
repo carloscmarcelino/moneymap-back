@@ -70,6 +70,20 @@ export class InvestmentsService {
     };
   }
 
+  async getTotal(userId: string) {
+    const investments = await this.investmentsRepository.find({
+      where: {
+        userId,
+      },
+    });
+
+    const total = investments.reduce((acc, investment) => {
+      return acc + Number(investment.value);
+    }, 0);
+
+    return { total: total };
+  }
+
   async create(
     body: CreateInvestmentDto,
     userId: string,
