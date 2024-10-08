@@ -22,8 +22,6 @@ export class ExitsService {
       relations: ['paymentMethod'],
     });
 
-    console.log('get exits', data);
-
     return {
       data,
       totalItems,
