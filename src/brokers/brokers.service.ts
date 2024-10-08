@@ -10,9 +10,13 @@ export class BrokersService {
       'https://brasilapi.com.br/api/cvm/corretoras/v1',
     );
 
+    const activeBrokers = data.filter(
+      (broker) => broker.status !== 'CANCELADA',
+    );
+
     return {
-      data: data.filter((broker) => broker.status !== 'CANCELADA'),
-      totalItems: data.length,
+      data: activeBrokers,
+      totalItems: activeBrokers.length,
     };
   }
 }
