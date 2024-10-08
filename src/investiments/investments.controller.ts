@@ -11,9 +11,10 @@ import {
 } from '@nestjs/common';
 import { ApiResponse, AuthenticatedRequest } from 'src/types';
 import { InvestmentsService } from './investments.service';
-import { InvestmentsEntity } from './investments.entity';
 import { CreateInvestmentDto } from './dto/create-investment.dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth-guard';
+import { InvestmentTypesEntity } from './entity/types.entity';
+import { InvestmentsEntity } from './entity/investments.entity';
 
 @Controller('investments')
 @UseGuards(JwtAuthGuard)
@@ -27,6 +28,11 @@ export class InvestmentsController {
     const userId = req.user.id;
 
     return this.investimentsService.get(userId);
+  }
+
+  @Get('types')
+  getTypes(): Promise<ApiResponse<InvestmentTypesEntity>> {
+    return this.investimentsService.getTypes();
   }
 
   @Get(':id')

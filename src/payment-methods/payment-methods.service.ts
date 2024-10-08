@@ -13,8 +13,6 @@ export class PaymentMethodsService {
   async onModuleInit() {
     const existingPaymentMethods = await this.paymentMethodsRepository.find();
 
-    console.log(existingPaymentMethods);
-
     if (!existingPaymentMethods.length) {
       await this.paymentMethodsRepository.save([
         { name: 'Cartão de crédito' },
