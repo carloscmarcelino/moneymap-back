@@ -38,6 +38,13 @@ export class EntriesController {
     return this.entriesService.get(userId);
   }
 
+  @Get('total')
+  getTotal(@Req() req: AuthenticatedRequest) {
+    const userId = req.user.id;
+
+    return this.entriesService.getTotal(userId);
+  }
+
   @Delete(':id')
   delete(@Param('id') id: string): Promise<DeleteResult> {
     return this.entriesService.delete(id);
