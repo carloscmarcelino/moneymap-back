@@ -27,6 +27,13 @@ export class ExitsController {
     return this.expensesService.get(userId);
   }
 
+  @Get('total')
+  getTotal(@Req() req: AuthenticatedRequest) {
+    const userId = req.user.id;
+
+    return this.expensesService.getTotal(userId);
+  }
+
   @Get(':id')
   getById(@Param('id') id: string): Promise<ExitsEntity> {
     return this.expensesService.getById(id);

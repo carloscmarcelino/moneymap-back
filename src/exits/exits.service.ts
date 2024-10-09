@@ -28,6 +28,18 @@ export class ExitsService {
     };
   }
 
+  async getTotal(userId: string) {
+    const exits = await this.expensesRepository.find({
+      where: {
+        userId,
+      },
+    });
+
+    const total = exits.reduce((acc, exit) => acc + Number(exit.amount), 0);
+
+    return { total };
+  }
+
   async getById(id: string): Promise<ExitsEntity> {
     const data = await this.expensesRepository.findOneBy({ id });
 
