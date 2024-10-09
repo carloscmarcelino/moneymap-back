@@ -81,7 +81,24 @@ export class InvestmentsService {
       return acc + Number(investment.value);
     }, 0);
 
-    return { total: total };
+    const investmentsThisMonth = investments.filter(
+      (investment) =>
+        new Date(investment.date).getMonth() === new Date().getMonth(),
+    );
+
+    const totalInvestedThisMonth = investmentsThisMonth.reduce(
+      (acc, investment) => {
+        return acc + Number(investment.value);
+      },
+      0,
+    );
+
+    console.log(totalInvestedThisMonth);
+
+    return {
+      total,
+      totalInvestedThisMonth,
+    };
   }
 
   async create(
