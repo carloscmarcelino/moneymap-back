@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -32,10 +33,14 @@ export class EntriesController {
   }
 
   @Get()
-  get(@Req() req: AuthenticatedRequest): Promise<ApiResponse<EntriesEntity>> {
+  get(
+    @Req() req: AuthenticatedRequest,
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
+  ): Promise<ApiResponse<EntriesEntity>> {
     const userId = req.user.id;
 
-    return this.entriesService.get(userId);
+    return this.entriesService.get(userId, startDate, endDate);
   }
 
   @Get('total')

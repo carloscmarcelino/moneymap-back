@@ -93,8 +93,6 @@ export class InvestmentsService {
       0,
     );
 
-    console.log(totalInvestedThisMonth);
-
     return {
       total,
       totalInvestedThisMonth,

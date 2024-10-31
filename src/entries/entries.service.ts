@@ -18,10 +18,24 @@ export class EntriesService {
     return await this.entriesRepository.save(entrie);
   }
 
-  async get(userId: string): Promise<ApiResponse<EntriesEntity>> {
-    const [data, totalItems] = await this.entriesRepository.findAndCount({
-      where: { userId },
-    });
+  async get(
+    userId: string,
+    startDate: string,
+    endDate: string,
+  ): Promise<ApiResponse<EntriesEntity>> {
+    const query = this.entriesRepository
+      .createQueryBuilder('entry')
+      .where('entry.userId = :userId', { userId });
+
+    if (startDate) {
+      query.andWhere('entry.date >= :startDate', { startDate });
+    }
+
+    if (endDate) {
+      query.andWhere('entry.date <= :endDate', { endDate });
+    }
+
+    const [data, totalItems] = await query.getManyAndCount();
 
     return {
       data,
