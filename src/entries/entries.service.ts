@@ -24,6 +24,7 @@ export class EntriesService {
     endDate: string,
     page: number,
     limit: number,
+    search: string,
   ): Promise<ApiResponse<EntriesEntity>> {
     const query = this.entriesRepository
       .createQueryBuilder('entry')
@@ -35,6 +36,12 @@ export class EntriesService {
 
     if (endDate) {
       query.andWhere('entry.date <= :endDate', { endDate });
+    }
+
+    if (search) {
+      query.andWhere('entry.description LIKE :search', {
+        search: `%${search}%`,
+      });
     }
 
     query.take(limit);

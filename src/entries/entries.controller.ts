@@ -39,10 +39,18 @@ export class EntriesController {
     @Query('endDate') endDate: string,
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 25,
+    @Query('search') search: string,
   ): Promise<ApiResponse<EntriesEntity>> {
     const userId = req.user.id;
 
-    return this.entriesService.get(userId, startDate, endDate, page, limit);
+    return this.entriesService.get(
+      userId,
+      startDate,
+      endDate,
+      page,
+      limit,
+      search,
+    );
   }
 
   @Get('total')
