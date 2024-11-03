@@ -22,6 +22,8 @@ export class EntriesService {
     userId: string,
     startDate: string,
     endDate: string,
+    page: number,
+    limit: number,
   ): Promise<ApiResponse<EntriesEntity>> {
     const query = this.entriesRepository
       .createQueryBuilder('entry')
@@ -35,6 +37,9 @@ export class EntriesService {
       query.andWhere('entry.date <= :endDate', { endDate });
     }
 
+    query.take(limit);
+    query.skip((page - 1) * limit);
+
     const [data, totalItems] = await query.getManyAndCount();
 
     return {
@@ -43,20 +48,24 @@ export class EntriesService {
     };
   }
 
-  async getTotal(userId: string) {
-    const entries = await this.entriesRepository.find({
-      where: {
-        userId,
-      },
-    });
+  async getTotal(userId: string, startDate: string, endDate: string) {
+    const query = this.entriesRepository
+      .createQueryBuilder('entry')
+      .select('SUM(entry.value)', 'total')
+      .where('entry.userId = :userId', { userId });
 
-    const total = entries.reduce(
-      (acc, entrie) => acc + Number(entrie.value),
-      0,
-    );
+    if (startDate) {
+      query.andWhere('entry.date >= :startDate', { startDate });
+    }
+
+    if (endDate) {
+      query.andWhere('entry.date <= :endDate', { endDate });
+    }
+
+    const result = await query.getRawOne();
 
     return {
-      total,
+      total: result ? Number(result.total) : 0,
     };
   }
 

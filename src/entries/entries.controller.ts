@@ -37,17 +37,23 @@ export class EntriesController {
     @Req() req: AuthenticatedRequest,
     @Query('startDate') startDate: string,
     @Query('endDate') endDate: string,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 25,
   ): Promise<ApiResponse<EntriesEntity>> {
     const userId = req.user.id;
 
-    return this.entriesService.get(userId, startDate, endDate);
+    return this.entriesService.get(userId, startDate, endDate, page, limit);
   }
 
   @Get('total')
-  getTotal(@Req() req: AuthenticatedRequest) {
+  getTotal(
+    @Req() req: AuthenticatedRequest,
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
+  ) {
     const userId = req.user.id;
 
-    return this.entriesService.getTotal(userId);
+    return this.entriesService.getTotal(userId, startDate, endDate);
   }
 
   @Delete(':id')
