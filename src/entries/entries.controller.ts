@@ -104,11 +104,6 @@ export class EntriesController {
 
     const buffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
 
-    res.setHeader('Content-Disposition', 'attachment; filename=entries.xlsx');
-    res.setHeader(
-      'Content-Type',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    );
     res.send(buffer);
   }
 
